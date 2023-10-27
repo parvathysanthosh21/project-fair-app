@@ -11,7 +11,7 @@ function Footer() {
             to={"/"}
             className='fs-4'
             style={{textDecoration:"none", color:'black'}}>
-  <i className="fa-solid fa-cloud-arrow-up"></i>  
+  <i className="fa-brands fa-stack-overflow fa-bounce p-2"></i>   
   Project-Fair
             </Link>
            

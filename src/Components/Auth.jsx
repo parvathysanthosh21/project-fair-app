@@ -1,10 +1,37 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { registerAPI } from '../services/allAPI'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Auth({register}) {
+  const navigate = useNavigate()
+  const [userData,setUserData] = useState({
+    username:"",email:"",password:""
+  })
+
+   const handleRegister = async (e) =>{
+    e.preventDefault()
+    const {username,email,password} = userData
+    if(!username || !email || !password){
+      toast.info("Please fill the form completely")
+    }else{
+      const result = await registerAPI(userData)
+      if(result.status===200){
+        toast.success(`${result.data.username} has registerd successfully!!!`)
+        setUserData({
+          username:"",email:"",password:""
+        })
+        navigate('/login')
+      }else{
+        toast.warning(result.response.data)
+        console.log(result);
+      }
+    }
+   }
     const isRegisterForm = register?true:false
+
   return (
     <div style={{width:'100%',height:'100vh'}} className='d-flex justify-content-center align-items-center'>
        <div className='w-75 container'>
@@ -23,27 +50,27 @@ function Auth({register}) {
                             }
                         </h5>
                         <Form className='text-light w-100'>
-                            {
+                        {
                                 isRegisterForm &&
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control type="text" placeholder="Enter User Name" />                                
-                              </Form.Group>
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Control type="text" placeholder="Username" value={userData.username} onChange={e=>setUserData({...userData,username:e.target.value})}/>
+                                </Form.Group>
                             }
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control type="email" placeholder="Enter Email ID" />                                
-                              </Form.Group>
-                              <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control type="password" placeholder="Enter Password" />                                
-                              </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                <Form.Control type="email" placeholder="Enter Email Id" value={userData.email} onChange={e=>setUserData({...userData,email:e.target.value})} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                <Form.Control type="password" placeholder="Enter Password" value={userData.password} onChange={e=>setUserData({...userData,password:e.target.value})}/>
+                            </Form.Group>
                               {
                                 isRegisterForm ? 
                                 <div>
-                                    <button className='btn btn-light'>Register</button>
-                                    <p>Already have an Account? Click Here To <Link to={'/login'}>Login</Link> </p>
+                                    <button className='btn btn-light' onClick={handleRegister}>Register</button>
+                                    <p>Already have an Account? Click Here To <Link style={{textDecoration:'none',color:'red'}} to={'/login'}>Login</Link> </p>
                                 </div>:
                                 <div>
                                 <button className='btn btn-light'>Login</button>
-                                <p>New User? Click Here To <Link to={'/register'}>Register</Link> </p>
+                                <p>New User? Click Here To <Link style={{textDecoration:'none',color:'red'}} to={'/register'}>Register</Link> </p>
                             </div>
                               }
                         </Form>
@@ -52,6 +79,10 @@ function Auth({register}) {
                 </div>
             </div>
        </div>
+       <ToastContainer 
+       theme="colored"
+       autoClose={2000}
+       position="top-right"/>
     </div>
   )
 }

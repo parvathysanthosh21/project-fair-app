@@ -61,7 +61,7 @@ function AddProjects() {
                     alert("Project added")
                 } else {
                     console.log(result);
-                    console.log(result.response.data);
+                    toast.warning(result.response.data);
                 }
             }
 

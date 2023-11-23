@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { Card,Modal,Col,Row } from 'react-bootstrap'
-import cardimg from '../Assests/plant store.png'
-import { Link } from 'react-router-dom';
-function ProjectCard() {
+import projectPic from '../Assests/plant store.png'
+import { BASE_URL } from '../services/baserul';
+function ProjectCard({project}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
   return (
     <>
- <Card style={{width:'28rem'}} className='shadow mb-5 btn' onClick={handleShow}>
-      <Card.Img variant="top" src={cardimg} />
+ {project &&<Card style={{width:'28rem'}} className='shadow mb-5 btn' onClick={handleShow}>
+      <Card.Img style={{height:'200px'}}  variant="top" src={project?`${BASE_URL}/uploads/${project.projectimage}`:projectPic} />
       <Card.Body>
-        <Card.Title>Project Title</Card.Title>
+        <Card.Title>{project?.title}</Card.Title>
       </Card.Body>
-    </Card>
+    </Card>}
     <Modal size='lg' show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Project Details</Modal.Title>
@@ -22,12 +22,12 @@ function ProjectCard() {
         <Modal.Body>
             <Row>
                 <Col md={6}>
-                <img className='img-fluid' style={{height:'200px'}} src={cardimg} alt="project img" />
+                <img className='img-fluid' style={{height:'200px'}} src={project?`${BASE_URL}/uploads/${project.projectimage}`:projectPic} alt="project img" />
                 </Col>
                 <Col md={6}>
-                    <h2>Project Title</h2>
-                    <p>Project Overview : Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam quaerat quibusdam nisi odit omnis animi, hic odio ullam dolor reprehenderit cum consequuntur vitae in repudiandae similique? Eaque velit accusantium veniam.</p>
-                    <p>Language Used: <span className='fw-bolder'>HTML, CSS , React</span></p>
+                    <h2 className='text-warning fw-bolder'>{project?.title}</h2>
+                    <p>Project Overview : {project?.overview}</p>
+                    <p >Language Used: <span className='fw-bolder text-danger'>{project?.languages}</span></p>
                 </Col>
             </Row>
             <div className='mt-3'>

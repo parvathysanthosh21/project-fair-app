@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 function Header({ insideDashboard }) {
   return (
     <>
-      <Navbar style={{ backgroundColor: '#90ee90' }} className="position-fixed top-0 w-100">
+      <Navbar style={{ backgroundColor: '#90ee90' ,zIndex:"1"}} className="position-fixed top-0 w-100" >
         <Container>
           <Navbar.Brand>
             <Link to={'/'} style={{ textDecoration: 'none', color: 'white' }}>

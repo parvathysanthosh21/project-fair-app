@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Collapse from 'react-bootstrap/Collapse';
 
 function MyProfile() {
     const [open, setOpen] = useState(false);
+    const [userProfile,setUseProfile]= useState({
+        username:"",email:"",password:"",profile:"",github:"",linkedin:""
+    })
+    const [existingImage,setExistingImage] = useState("")
+    const [preview, setpreview] = useState("")
+    useEffect(()=>{
+        
+    })
   return (
     <div className='border rounded shadow p-2 mb-5'>
         <div className='d-flex justify-content-between align-items-center m-3'>
@@ -18,7 +26,7 @@ function MyProfile() {
         
                     </label>
                 </div>
-                <div className='mt-3 '>
+                <div className='mt-3'>
                     <input type="text" className='form-control' placeholder='GitHub' />
                 </div>
                 <div className='mt-3 mb-5'>
